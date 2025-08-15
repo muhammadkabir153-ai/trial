@@ -53,6 +53,7 @@ function renderDebtors() {
     const div = document.createElement("div");
     div.className = "debtor";
     div.textContent = `${debtor.name} owes ₦${debtor.amount} for ${debtor.item}, due ${debtor.dueDate}`;
+    div.onclick = () => manageDebtor(index);
     container.appendChild(div);
   });
 }
@@ -68,7 +69,7 @@ function renderDueDebtors() {
   // Sort by due date
   const sorted = [...debtors].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
 
-  sorted.forEach(debtor => {
+  sorted.forEach((debtor, index) => {
     const div = document.createElement("div");
     const status =
       debtor.dueDate < today ? "overdue" :
@@ -76,6 +77,7 @@ function renderDueDebtors() {
 
     div.className = `debtor ${status}`;
     div.textContent = `${debtor.name} owes ₦${debtor.amount} for ${debtor.item}, due ${debtor.dueDate}`;
+    div.onclick = () => manageDebtor(debtors.indexOf(debtor));
     container.appendChild(div);
   });
 }
@@ -101,8 +103,39 @@ function filterDueDebtors() {
 
     div.className = `debtor ${status}`;
     div.textContent = `${debtor.name} owes ₦${debtor.amount} for ${debtor.item}, due ${debtor.dueDate}`;
+    div.onclick = () => manageDebtor(debtors.indexOf(debtor));
     container.appendChild(div);
   });
+}
+
+// ================== Manage Debtor ==================
+function manageDebtor(index) {
+  const debtor = debtors[index];
+  const action = prompt(
+    `Debtor: ${debtor.name}\nItem: ${debtor.item}\nAmount: ₦${debtor.amount}\nDue: ${debtor.dueDate}\n\nChoose action:\n1 = Mark as Paid\n2 = Edit Details\n3 = Cancel`
+  );
+
+  if (action === "1") {
+    // Remove debtor
+    if (confirm("Mark as paid and remove this debtor?")) {
+      debtors.splice(index, 1);
+      saveData("debtors", debtors);
+      renderDebtors();
+      renderDueDebtors();
+    }
+  } else if (action === "2") {
+    // Edit details
+    const newAmount = parseFloat(prompt("Enter new amount:", debtor.amount));
+    const newDueDate = prompt("Enter new due date (YYYY-MM-DD):", debtor.dueDate);
+
+    if (!isNaN(newAmount) && newDueDate) {
+      debtor.amount = newAmount;
+      debtor.dueDate = newDueDate;
+      saveData("debtors", debtors);
+      renderDebtors();
+      renderDueDebtors();
+    }
+  }
 }
 
 // ================== Init ==================
