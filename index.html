@@ -20,8 +20,19 @@
     <section id="calendar">
       <h2>Sales by Date</h2>
       <input type="date" id="salesDate" />
-      <button onclick="selectDate()">Open Sales</button>
+      <button id="openSalesBtn">Open Sales</button>
       <p id="currentDate"></p>
+    </section>
+
+    <!-- Add Item -->
+    <section id="addItem">
+      <h2>Add Item</h2>
+      <form id="itemForm">
+        <input type="text" id="itemName" placeholder="Item Name" required />
+        <input type="number" id="portionPrice" placeholder="Portion Price" required />
+        <input type="number" id="itemCost" placeholder="Cost" required />
+        <button type="submit">Add Item</button>
+      </form>
     </section>
 
     <!-- Sales Table -->
@@ -46,7 +57,7 @@
     <!-- Debtors -->
     <section id="debtors">
       <h2>Debtors</h2>
-      <form onsubmit="addDebtor(event)">
+      <form id="debtorForm">
         <input type="text" id="debtorName" placeholder="Name" required />
         <input type="text" id="debtorItem" placeholder="Item" required />
         <input type="number" id="debtorAmount" placeholder="Amount" required />
