@@ -13,6 +13,7 @@
   <nav>
     <button onclick="showTab('sales')">Sales</button>
     <button onclick="showTab('debtors')">Debtors</button>
+    <button onclick="showTab('dueDebtors')">Due Debtors</button>
   </nav>
 
   <!-- Sales Section -->
@@ -27,6 +28,13 @@
     <h2>Debtors</h2>
     <button onclick="addDebtor()">Add Debtor</button>
     <div id="debtorsList"></div>
+  </section>
+
+  <!-- Due Debtors Section -->
+  <section id="dueDebtors" class="tab hidden">
+    <h2>Due Debtors</h2>
+    <input type="text" id="searchInput" placeholder="Search debtor..." onkeyup="renderDueDebtors()">
+    <div id="dueDebtorsList"></div>
   </section>
 
   <script src="app.js"></script>
