@@ -1,6 +1,7 @@
 let salesData = JSON.parse(localStorage.getItem("salesData")) || {};
 let currentDate = new Date().toISOString().split("T")[0];
 
+// === Select Date ===
 function selectDate() {
   const date = document.getElementById("salesDate").value;
   if (!date) return;
@@ -13,6 +14,48 @@ function selectDate() {
   render();
 }
 
+// === Add Item ===
+function addItem(e) {
+  e.preventDefault();
+  const name = document.getElementById("itemName").value;
+  const portionPrice = parseFloat(document.getElementById("portionPrice").value);
+  const cost = parseFloat(document.getElementById("itemCost").value);
+
+  if (!salesData[currentDate]) {
+    salesData[currentDate] = { items: [], debtors: [] };
+  }
+
+  salesData[currentDate].items.push({
+    name,
+    portionPrice,
+    cost,
+    sold: 0
+  });
+
+  saveData();
+  render();
+
+  e.target.reset();
+}
+
+// === Add Debtor ===
+function addDebtor(e) {
+  e.preventDefault();
+  const name = document.getElementById("debtorName").value;
+  const item = document.getElementById("debtorItem").value;
+  const amount = parseFloat(document.getElementById("debtorAmount").value);
+  const due = document.getElementById("debtorDue").value;
+
+  if (!salesData[currentDate]) return;
+
+  salesData[currentDate].debtors.push({ name, item, amount, due });
+  saveData();
+  renderDebtors();
+
+  e.target.reset();
+}
+
+// === Render Sales Table ===
 function render() {
   const salesTable = document.getElementById("salesTable");
   salesTable.innerHTML = "";
@@ -45,6 +88,7 @@ function render() {
   renderDebtors();
 }
 
+// === Sell Item ===
 function sellItem(index, qty) {
   if (!salesData[currentDate]) return;
   salesData[currentDate].items[index].sold += qty;
@@ -55,41 +99,30 @@ function sellItem(index, qty) {
   render();
 }
 
-function addDebtor(e) {
-  e.preventDefault();
-  const name = document.getElementById("debtorName").value;
-  const item = document.getElementById("debtorItem").value;
-  const amount = parseFloat(document.getElementById("debtorAmount").value);
-  const due = document.getElementById("debtorDue").value;
-
-  if (!salesData[currentDate]) return;
-
-  salesData[currentDate].debtors.push({ name, item, amount, due });
-  saveData();
-  renderDebtors();
-
-  document.getElementById("debtorName").value = "";
-  document.getElementById("debtorItem").value = "";
-  document.getElementById("debtorAmount").value = "";
-  document.getElementById("debtorDue").value = "";
-}
-
+// === Render Debtors ===
 function renderDebtors() {
   const debtorList = document.getElementById("debtorList");
   debtorList.innerHTML = "";
   if (!salesData[currentDate]) return;
 
-  salesData[currentDate].debtors.forEach((debtor, index) => {
+  salesData[currentDate].debtors.forEach(debtor => {
     const li = document.createElement("li");
     li.textContent = `${debtor.name} - ${debtor.item} - ₦${debtor.amount} (Due: ${debtor.due})`;
     debtorList.appendChild(li);
   });
 }
 
+// === Save Data ===
 function saveData() {
   localStorage.setItem("salesData", JSON.stringify(salesData));
 }
 
+// === Event Listeners ===
+document.getElementById("openSalesBtn").addEventListener("click", selectDate);
+document.getElementById("itemForm").addEventListener("submit", addItem);
+document.getElementById("debtorForm").addEventListener("submit", addDebtor);
+
+// === Backup & Restore ===
 document.getElementById("backupBtn").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(salesData)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -116,5 +149,5 @@ document.getElementById("restoreBtn").addEventListener("click", () => {
   input.click();
 });
 
-// Initialize with today’s date
+// === Initialize with today’s date ===
 selectDate();
