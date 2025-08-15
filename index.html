@@ -1,71 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kayan Miya Sales App</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <script defer src="app.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales & Debtors App</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Kayan Miya Sales App</h1>
-    <button id="backupBtn">📥 Backup</button>
-    <button id="restoreBtn">📤 Restore</button>
-  </header>
+  <h1>Sales & Debtors</h1>
 
-  <main>
-    <!-- Calendar Section -->
-    <section id="calendar">
-      <h2>Sales by Date</h2>
-      <input type="date" id="salesDate" />
-      <button id="openSalesBtn">Open Sales</button>
-      <p id="currentDate"></p>
-    </section>
+  <div class="tabs">
+    <button onclick="showTab('sales')">Sales</button>
+    <button onclick="showTab('debtors')">Debtors</button>
+    <button onclick="showTab('dueDebtors')">Due Debtors</button>
+  </div>
 
-    <!-- Add Item -->
-    <section id="addItem">
-      <h2>Add Item</h2>
-      <form id="itemForm">
-        <input type="text" id="itemName" placeholder="Item Name" required />
-        <input type="number" id="portionPrice" placeholder="Portion Price" required />
-        <input type="number" id="itemCost" placeholder="Cost" required />
-        <button type="submit">Add Item</button>
-      </form>
-    </section>
+  <!-- Sales Tab -->
+  <div id="sales" class="tab active">
+    <button onclick="openNewSale()">+ Open Sales</button>
+    <div id="salesList"></div>
+  </div>
 
-    <!-- Sales Table -->
-    <section id="sales">
-      <h2>Sales</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Portion Price</th>
-            <th>Cost</th>
-            <th>Sold</th>
-            <th>Profit</th>
-            <th>Sell</th>
-          </tr>
-        </thead>
-        <tbody id="salesTable"></tbody>
-      </table>
-      <p><strong>Total Profit:</strong> <span id="totalProfit">0</span></p>
-    </section>
+  <!-- Debtors Tab -->
+  <div id="debtors" class="tab">
+    <button onclick="addDebtor()">+ Add Debtor</button>
+    <div id="debtorsList"></div>
+  </div>
 
-    <!-- Debtors -->
-    <section id="debtors">
-      <h2>Debtors</h2>
-      <form id="debtorForm">
-        <input type="text" id="debtorName" placeholder="Name" required />
-        <input type="text" id="debtorItem" placeholder="Item" required />
-        <input type="number" id="debtorAmount" placeholder="Amount" required />
-        <input type="date" id="debtorDue" required />
-        <button type="submit">Add Debtor</button>
-      </form>
-      <ul id="debtorList"></ul>
-    </section>
-  </main>
+  <!-- Due Debtors Tab -->
+  <div id="dueDebtors" class="tab">
+    <input type="text" id="debtorSearch" placeholder="Search debtor by name or date..." oninput="filterDueDebtors()">
+    <div id="dueDebtorsList"></div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
