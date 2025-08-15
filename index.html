@@ -1,38 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sales & Debtors App</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Sales & Debtors</h1>
+  <h1>Sales & Debtors App</h1>
 
-  <div class="tabs">
+  <nav>
     <button onclick="showTab('sales')">Sales</button>
     <button onclick="showTab('debtors')">Debtors</button>
-    <button onclick="showTab('dueDebtors')">Due Debtors</button>
-  </div>
+  </nav>
 
-  <!-- Sales Tab -->
-  <div id="sales" class="tab active">
-    <button onclick="openNewSale()">+ Open Sales</button>
+  <!-- Sales Section -->
+  <section id="sales" class="tab">
+    <h2>Sales</h2>
+    <button onclick="openNewSale()">Open New Sale</button>
     <div id="salesList"></div>
-  </div>
+  </section>
 
-  <!-- Debtors Tab -->
-  <div id="debtors" class="tab">
-    <button onclick="addDebtor()">+ Add Debtor</button>
+  <!-- Debtors Section -->
+  <section id="debtors" class="tab hidden">
+    <h2>Debtors</h2>
+    <button onclick="addDebtor()">Add Debtor</button>
     <div id="debtorsList"></div>
-  </div>
-
-  <!-- Due Debtors Tab -->
-  <div id="dueDebtors" class="tab">
-    <input type="text" id="debtorSearch" placeholder="Search debtor by name or date..." oninput="filterDueDebtors()">
-    <div id="dueDebtorsList"></div>
-  </div>
+  </section>
 
   <script src="app.js"></script>
 </body>
