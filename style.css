@@ -61,3 +61,8 @@ button.unsell {
   background: #f44336;
   color: white;
 }
+/* Debtor status colors */
+.debtor.overdue { color: red; font-weight: bold; }
+.debtor.today { color: orange; font-weight: bold; }
+.debtor.future { color: green; }
+
