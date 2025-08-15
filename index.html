@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kayan Miya Sales App</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Kayan Miya Sales App</h1>
+    <button id="backupBtn">📥 Backup</button>
+    <button id="restoreBtn">📤 Restore</button>
+  </header>
+
+  <main>
+    <!-- Calendar Section -->
+    <section id="calendar">
+      <h2>Sales by Date</h2>
+      <input type="date" id="salesDate" />
+      <button onclick="selectDate()">Open Sales</button>
+      <p id="currentDate"></p>
+    </section>
+
+    <!-- Sales Table -->
+    <section id="sales">
+      <h2>Sales</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Portion Price</th>
+            <th>Cost</th>
+            <th>Sold</th>
+            <th>Profit</th>
+            <th>Sell</th>
+          </tr>
+        </thead>
+        <tbody id="salesTable"></tbody>
+      </table>
+      <p><strong>Total Profit:</strong> <span id="totalProfit">0</span></p>
+    </section>
+
+    <!-- Debtors -->
+    <section id="debtors">
+      <h2>Debtors</h2>
+      <form onsubmit="addDebtor(event)">
+        <input type="text" id="debtorName" placeholder="Name" required />
+        <input type="text" id="debtorItem" placeholder="Item" required />
+        <input type="number" id="debtorAmount" placeholder="Amount" required />
+        <input type="date" id="debtorDue" required />
+        <button type="submit">Add Debtor</button>
+      </form>
+      <ul id="debtorList"></ul>
+    </section>
+  </main>
+</body>
+</html>
